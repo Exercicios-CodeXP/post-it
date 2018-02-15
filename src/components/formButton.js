@@ -1,16 +1,26 @@
+import React from 'react'
+
+// FORMA ANTIGA
+
 // props param
-function FormButton(props) {
-    let formButton = document.createElement('button');
+
+// function FormButton(props) {
+//     let formButton = document.createElement('button');
     
-    // destructuring
-    formButton.setAttribute('class', props.className);
-    formButton.setAttribute('type', props.type);
+//     // destructuring
+
+//     formButton.setAttribute('class', props.className);
+//     formButton.setAttribute('type', props.type);
     
-    formButton.addEventListener('click', props.click);
+//     formButton.addEventListener('click', props.click);
 
-    formButton.innerHTML = props.children;
+//     formButton.innerHTML = props.children;
 
-    return formButton;
-}
+//     return formButton;
+// }
 
-export default FormButton;
+// export default FormButton;
+
+// FORMA NOVA
+
+export default (props, children) => React.createElement('button', props, children)

@@ -1,20 +1,31 @@
-// props param
-function Form(props) {
-    let form = document.createElement('form');
+import React from 'react'
 
-    // destructuring
-    form.setAttribute('class', props.className);
+//FORMA ANTIGA
+
+// // props param
+
+// function Form(props) {
+//     let form = document.createElement('form');
+
+//     // destructuring
+
+//     form.setAttribute('class', props.className);
     
-    // forEach
-    for (var i = 0; i < props.children.length; i++) {
-        form.appendChild(props.children[i]);
-    }
+//     // forEach
 
-    if (props.click) {
-        form.addEventListener("click", props.click);
-    }
+//     for (var i = 0; i < props.children.length; i++) {
+//         form.appendChild(props.children[i]);
+//     }
+
+//     if (props.click) {
+//         form.addEventListener("click", props.click);
+//     }
     
-    return form;
-}
+//     return form;
+// }
 
-export default Form;
+// export default Form;
+
+//FORMA NOVA
+
+export default (props, children) => React.createElement('form', props, children)
