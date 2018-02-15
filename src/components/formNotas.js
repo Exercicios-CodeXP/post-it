@@ -1,10 +1,10 @@
 import React from 'react'
-import Form from './form.js'
-import FormInput from './formInput.js'
-import FormTextarea from './formTextarea.js'
-import FormButton from './formButton.js'
-import formTextarea from './formTextarea.js'
-import Nota from '../nota.js'
+import Form from './form'
+import FormInput from './formInput'
+import FormTextarea from './formTextarea'
+import FormButton from './formButton'
+import formTextarea from './formTextarea'
+import Nota from '../nota'
 
 //esta funcao abaixo precisa criar e retornar um elemento FormInput
 //definir as propriedes do componente
@@ -59,58 +59,47 @@ function criaComponenteButtonRemover(removerNota, posicao) {
     return React.createElement(FormButton, props.children);
 }
 
-function criaComponenteButtonConcluido(adicionarNota, posicao, notaAlterada) {
+function criaComponenteButtonConcluir(adicionarNota, posicao, notaAlterada) {
     const props = {
         className: 'note__control',
         type: 'button',
         onClick: event => {
-        props.adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, posicao);
+            adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, posicao);
+        }
+
     }
 
-}
-    
     const children = 'Concluido'
 
     return React.createElement(FormButton, props, children);
-  }
+}
 
 
 // destructuring / immutable
 // extract function
 // variable shorthand declaration
 
-function FormNotas(props) {
-    let notaAlterada = new Nota(props.notaAtual.titulo.props.notaAtual.texto, props.notaAtual.editando)
-}
+function FormNotas({ notaAtual, posicao, adicionarNota, removerNota, editarFormulario}) {
+    let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando);
+    let inputTitulo = criaComponenteInputTitulo(notaAlterada);
+    let textareaTexto = criaComponenteTextareaTexto(notaAlterada);
+    let props = { className: 'note' };
+    let children;
 
-let formNotas;
+    if (notaAlterada.editando) {
+        let buttonRemover = criaComponenteButtonRemover(removerNota, posicao);
+        let buttonConcluido = criaComponenteButtonConcluir(adicionarNota, posicao, notaAlterada);
+        children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
+    } else {
+        children = [inputTitulo, textareaTexto];
 
-let inputTitulo = criaComponenteInputTitulo(notaAlterada);
-
-let textareaTexto = criaComponenteTextareaTexto(notaAlterada);
-
-let formProps = { className: 'note' };
-
-let children;
-let onClick;
-
-if (props.notaAtual.editando) {
-    let buttonRemover = criaComponenteButtonRemover(props.removerNota, props.posicao);
-
-let buttonConcluido = criaComponenteButtonConcluido(props.adicionarNota, props.posicao, notaAlterada);
-
-children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
-} else {
-    children = [inputTitulo, textareaTexto];
-
-    onClick = () => {
-        props.editarFormulario(props.posicao);
+        props.onClick = () => editarFormulario(posicao);
     }
-}
 
-formNotas = React.createElement(form, formProps, children)
+    formNotas = React.createElement(form, props, children)
 
-return formNotas;
+    return formNotas;
+
 }
 
 export default FormNotas;

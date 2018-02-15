@@ -1,4 +1,4 @@
-import Nota from './nota.js';
+import Nota from './nota';
 
 
 class ListaNotas {

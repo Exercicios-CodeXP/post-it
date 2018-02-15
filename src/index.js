@@ -1,5 +1,5 @@
-import ListaNotas from './listaNotas.js';
-import FormNotas from './components/formNotas.js';
+import ListaNotas from './listaNotas';
+import FormNotas from './components/formNotas';
 
 let secao = document.getElementsByClassName('notes')[0];
 const observaMudancasNaLista = () => {
