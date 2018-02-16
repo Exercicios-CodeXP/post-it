@@ -6,20 +6,24 @@ import FormNotas from './formNotas'
 // para cada item da lista (array)
 // retornar elemento react
 
-function SecaoNotas(props) {
-    const propsSecao = { className: 'notes' };
-    const children = [];
-    for (let i = 0; i < props.listaNotas.contaTotal(); i++) {
-        const propsFormNotas = {
-            notaAtual: props.listaNotas.pega(i),
-            removerNota: props.removerNota,
-            adicionarNota: props.adicionarNota,
-            editarFormulario: props.editarFormulario,
-            posicao: i
-        }
-        let formNotas = React.criaFormNotas(FormNota, propsFormNotas);
-        children.push(formNotas);
+function montaUmFormNota(posicao, props) {
+    const propsFormNotas = {
+        posicao: posicao,
+        notaAtual: props.listaNotas.pega(posicao),
+        removerNota: props.removerNota,
+        adicionarNota: props.adicionarNota,
+        editarFormulario: props.editarFormulario
     }
+
+    return React.criaFormNotas(FormNota, propsFormNotas)
+}
+
+
+function SecaoNotas({notaAtual, listaNotas, adicionarNota, removerNota, editarFormulario}) {
+    const propsSecao = { className: 'notes' };
+
+    const children = props.listaNotas.map((notaAtual, posicao) => 
+    montaUmFormNota(posicao, listaNotas, adicionarNota, removerNota, editarFormulario));
 
     return React.createElement(Section, propsSecao, children);
 }
